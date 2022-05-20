@@ -8,8 +8,6 @@ query = {
     "lon": '180'
 }
 
-
-
 response = requests.get(ENV["URL"], params=query)
 # print(response.json())
 
@@ -24,5 +22,5 @@ loc_query = {
 }
 
 loc_res = requests.get(ENV["LOCATION_URL"], params=loc_query)
-print(loc_res.json())
+print(f"Over {loc_res.json()['address']['country']}")
 # print(longitude,latitude)
