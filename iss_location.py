@@ -44,5 +44,19 @@ def index():
         return render_template('results.html', **res)
     return render_template('index.html')
 
+@app.route('/inspace', methods=['POST', 'GET'])
+def in_space():
+    if request.method == 'POST':
+        ENV = dotenv_values()
+        respon = requests.get(ENV['PPL_IN_SPACE'])
+        people_in_space = respon.json()['number']
+        print(people_in_space)
+        r = {
+            'number' : people_in_space
+        }
+        return render_template('inspace.html', **r)
+    return render_template('index.html')
+
+
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8002, debug=True)
