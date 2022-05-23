@@ -13,12 +13,6 @@ def index():
     if request.method == 'POST':
         
         ENV = dotenv_values()
-
-        # query = {
-        #     "lat": '45',
-        #     "lon": '180'
-        # }
-
         response = requests.get(ENV["URL"])
         # print(response.json())
 
@@ -33,14 +27,17 @@ def index():
         }
 
         loc_res = requests.get(ENV["LOCATION_URL"], params=loc_query).json()
+        iss_location = None
         if 'error' in loc_res:
-            return 'Over water'
-        print(type(loc_res))
-        
+            iss_location = 'Over water'
+        else:
+            iss_location = loc_res['address']['country']
+       
+     
         res = {
-            'location': loc_res['address']['country']
+            'location': location
         }
-        print(loc_res)
+       
         return render_template('results.html', **res)
     return render_template('index.html')
 
@@ -59,4 +56,7 @@ def in_space():
 
 
 if __name__ == '__main__':
+    # you could add these things to the .env file if you
+    # i.e.  HOST=127.0.0.1 .. etc 
+
     app.run(host='127.0.0.1', port=8002, debug=True)
