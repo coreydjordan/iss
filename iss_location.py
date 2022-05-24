@@ -6,8 +6,12 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
+@app.route('/')
+def home():
+    return render_template('index.html')
 
-@app.route('/', methods= ['POST', 'GET'])
+
+@app.route('/find_iss', methods= ['POST', 'GET'])
 def index():
 
     if request.method == 'POST':
@@ -42,21 +46,23 @@ def index():
         }
         print(loc_res)
         return render_template('results.html', **res)
-    return render_template('index.html')
+    return render_template('find_iss.html')
 
 @app.route('/inspace', methods=['POST', 'GET'])
 def in_space():
     if request.method == 'POST':
         ENV = dotenv_values()
         respon = requests.get(ENV['PPL_IN_SPACE'])
+        
         people_in_space = respon.json()['number']
-        print(people_in_space)
+
+        
         r = {
             'number' : people_in_space
         }
         return render_template('inspace.html', **r)
-    return render_template('index.html')
+    return render_template('people_in_space.html')
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=8002, debug=True)
+    app.run(host='127.0.0.1', port=8001, debug=True)
