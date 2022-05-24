@@ -1,5 +1,4 @@
-from __future__ import print_function
-import requests, sys
+import requests
 from dotenv import dotenv_values
 from flask import Flask, render_template, request
 
