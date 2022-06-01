@@ -1,4 +1,5 @@
 import requests
+import os
 from dotenv import dotenv_values
 from flask import Flask, render_template, request
 
@@ -22,20 +23,20 @@ def index():
         #     "lon": '180'
         # }
 
-        response = requests.get("URL")
+        response = requests.get(os.getenv("ACCESS_TOKEN"))
         # print(response.json())
 
         latitude = response.json()['iss_position']['latitude']
         longitude = response.json()['iss_position']['longitude']
 
         loc_query = {
-            "key": "ACCESS_TOKEN",
+            "key": os.getenv("ACCESS_TOKEN"),
             "lon": longitude,
             "lat": latitude,
             "format": "json"
         }
 
-        loc_res = requests.get("LOCATION_URL", params=loc_query).json()
+        loc_res = requests.get(os.getenv("LOCATION_URL"), params=loc_query).json()
         if 'error' in loc_res:
             return 'Over water'
         print(type(loc_res))
@@ -51,7 +52,7 @@ def index():
 def in_space():
     if request.method == 'POST':
         ENV = dotenv_values()
-        respon = requests.get('PPL_IN_SPACE')
+        respon = requests.get(os.getenv('PPL_IN_SPACE'))
         
         people_in_space = respon.json()['number']
 
