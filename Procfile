@@ -1,1 +1,1 @@
-web: gunicorn 'app:app'
+web: gunicorn iss_location:app
