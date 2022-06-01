@@ -22,20 +22,20 @@ def index():
         #     "lon": '180'
         # }
 
-        response = requests.get(ENV["URL"])
+        response = requests.get("URL")
         # print(response.json())
 
         latitude = response.json()['iss_position']['latitude']
         longitude = response.json()['iss_position']['longitude']
 
         loc_query = {
-            "key": ENV["ACCESS_TOKEN"],
+            "key": "ACCESS_TOKEN",
             "lon": longitude,
             "lat": latitude,
             "format": "json"
         }
 
-        loc_res = requests.get(ENV["LOCATION_URL"], params=loc_query).json()
+        loc_res = requests.get("LOCATION_URL", params=loc_query).json()
         if 'error' in loc_res:
             return 'Over water'
         print(type(loc_res))
@@ -51,7 +51,7 @@ def index():
 def in_space():
     if request.method == 'POST':
         ENV = dotenv_values()
-        respon = requests.get(ENV['PPL_IN_SPACE'])
+        respon = requests.get('PPL_IN_SPACE')
         
         people_in_space = respon.json()['number']
 
