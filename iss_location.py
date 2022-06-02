@@ -11,7 +11,7 @@ def home():
     return render_template('index.html')
 
 
-@app.route('/find_iss', methods= ['POST', 'GET'])
+@app.route('/find_iss', methods = ['POST', 'GET'])
 def index():
 
     if request.method == 'POST':
@@ -22,15 +22,15 @@ def index():
         #     "lat": '45',
         #     "lon": '180'
         # }
-
-        response = requests.get(os.getenv("ACCESS_TOKEN"))
+        access_token = os.getenv("ACCESS_TOKEN")
+        response = requests.access_token
         # print(response.json())
 
         latitude = response.json()['iss_position']['latitude']
         longitude = response.json()['iss_position']['longitude']
 
         loc_query = {
-            "key": os.getenv("ACCESS_TOKEN"),
+            "key": access_token,
             "lon": longitude,
             "lat": latitude,
             "format": "json"
@@ -39,7 +39,6 @@ def index():
         loc_res = requests.get(os.getenv("LOCATION_URL"), params=loc_query).json()
         if 'error' in loc_res:
             return 'Over water'
-        print(type(loc_res))
         
         res = {
             'location': loc_res['address']['country']
