@@ -1,11 +1,11 @@
 import requests
 import os
-from dotenv import dotenv_values
+from dotenv import load_dotenv
 from flask import Flask, render_template, request
 
 
 app = Flask(__name__)
-
+load_dotenv()
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -16,18 +16,19 @@ def index():
 
     if request.method == 'POST':
         
-        ENV = dotenv_values()
-
         # query = {
         #     "lat": '45',
         #     "lon": '180'
         # }
         access_token = os.getenv("ACCESS_TOKEN")
-        response = requests.access_token
-        # print(response.json())
-
+        response = requests.get(os.getenv('URL'))
         latitude = response.json()['iss_position']['latitude']
         longitude = response.json()['iss_position']['longitude']
+    
+
+        # print(response.json())
+
+     
 
         loc_query = {
             "key": access_token,
@@ -37,6 +38,8 @@ def index():
         }
 
         loc_res = requests.get(os.getenv("LOCATION_URL"), params=loc_query).json()
+        
+        
         if 'error' in loc_res:
             return 'Over water'
         
@@ -50,7 +53,6 @@ def index():
 @app.route('/inspace', methods=['POST', 'GET'])
 def in_space():
     if request.method == 'POST':
-        ENV = dotenv_values()
         respon = requests.get(os.getenv('PPL_IN_SPACE'))
         
         people_in_space = respon.json()['number']
