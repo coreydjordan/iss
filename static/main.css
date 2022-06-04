@@ -1,6 +1,22 @@
+body {
+    background: url('/static/imgs/shot-by-cerqueira-0o_GEzyargo-unsplash.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* background-position: center center; */
+}
 
+.intro{
+    color: white;
+}
+.history{
+    color: white
+}
 
-.container{
+#iss_form{
+    justify-content: center;
+}
+
+.container {
     padding-top: 20px;
 }
 .intro{

@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    
-    <form class="find" action="/find_iss" method="post" accept-charset="utf-8">
+    <div class="contianer">
+      <div class="row">
+        <div class="col text-center">
+          <h1 style="color: white;">Click to find where the ISS is right now!</h1><br>
+    <form id="iss_form" class="find" action="/find_iss" method="post" accept-charset="utf-8">
         <button class="btn btn-primary" type="submit">Find ISS</button>
         </form>
+      </div>
+    </div>
+  </div>
+
 {% endblock %}

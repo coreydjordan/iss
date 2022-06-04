@@ -41,7 +41,8 @@ def index():
         
         
         if 'error' in loc_res:
-            return 'Over water'
+            over_water = 'Over Water'
+            return over_water
         
         res = {
             'location': loc_res['address']['country']
