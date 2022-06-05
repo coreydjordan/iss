@@ -30,4 +30,7 @@ body {
 .card{
     background-color: rgba(181, 180, 180, 0.598);
 }
+.in-space-form{
+    justify-content: center;
+}
 
