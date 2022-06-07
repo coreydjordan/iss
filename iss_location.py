@@ -21,7 +21,7 @@ def index():
         #     "lon": '180'
         # }
         access_token = os.getenv("ACCESS_TOKEN")
-        response = requests.get(os.getenv('URL'))
+        response = requests.get(os.getenv('ISS_URL'))
         latitude = response.json()['iss_position']['latitude']
         longitude = response.json()['iss_position']['longitude']
     
@@ -39,15 +39,14 @@ def index():
 
         loc_res = requests.get(os.getenv("LOCATION_URL"), params=loc_query).json()
         
+        res = dict()
         
         if 'error' in loc_res:
-            over_water = 'Over Water'
-            return over_water
+            res['location'] = 'Over Water'
         
-        res = {
-            'location': loc_res['address']['country']
-        }
-        print(loc_res)
+        else:
+            res['location'] = loc_res['address']['country']
+
         return render_template('results.html', **res)
     return render_template('find_iss.html')
 
